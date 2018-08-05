@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:pusher_flutter/pusher_flutter.dart';
 
 void main() {
-  runApp(new MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => new _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   Map _latestMessage;
   PusherError _lastError;
   PusherConnectionState _connectionState;
-  PusherFlutter pusher = new PusherFlutter("<your_key>");
+  PusherFlutter pusher = PusherFlutter("<your_key>");
 
   @override
   initState() {
@@ -33,16 +33,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-          appBar: new AppBar(
-            title: new Text('Pusher example app.'),
+    return MaterialApp(
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text('Pusher example app.'),
           ),
-          body: new Column(
+          body: Column(
             children: <Widget>[
-              new Row(
+              Row(
                 children: <Widget>[
-                  new Text('Latest message ${_latestMessage.toString()}')
+                  Text('Latest message ${_latestMessage.toString()}')
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
@@ -55,18 +55,14 @@ class _MyAppState extends State<MyApp> {
 
   Widget buildErrorRow(BuildContext context) {
     if (_lastError != null) {
-      return new Row(
+      return Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          new Text("Error: ${_lastError.message}")
-        ],
+        children: <Widget>[Text("Error: ${_lastError.message}")],
       );
     } else {
-      return new Row(
+      return Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          new Text("No Errors")
-        ],
+        children: <Widget>[Text("No Errors")],
       );
     }
   }
@@ -74,44 +70,43 @@ class _MyAppState extends State<MyApp> {
   Widget buildConnectRow(BuildContext context) {
     switch (_connectionState) {
       case PusherConnectionState.connected:
-        return new Row(
+        return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new MaterialButton(
-                onPressed: disconnect, child: new Text("Disconnect"))
+            MaterialButton(onPressed: disconnect, child: Text("Disconnect"))
           ],
         );
       case PusherConnectionState.disconnected:
-        return new Row(
+        return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new MaterialButton(onPressed: connect, child: new Text("Connect"))
+            MaterialButton(onPressed: connect, child: Text("Connect"))
           ],
         );
       case PusherConnectionState.disconnecting:
-        return new Row(
+        return Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[new Text("Disconnecting...")],
+          children: <Widget>[Text("Disconnecting...")],
         );
       case PusherConnectionState.connecting:
-        return new Row(
+        return Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[new Text("Connecting...")],
+          children: <Widget>[Text("Connecting...")],
         );
       case PusherConnectionState.reconnectingWhenNetworkBecomesReachable:
-        return new Row(
+        return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Text("Will reconnect when network becomes available")
+            Text("Will reconnect when network becomes available")
           ],
         );
       case PusherConnectionState.reconnecting:
-        return new Row(
+        return Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[new Text("Reconnecting...")],
+          children: <Widget>[Text("Reconnecting...")],
         );
     }
-    return new Text("Invalid state");
+    return Text("Invalid state");
   }
 
   void connect() {
